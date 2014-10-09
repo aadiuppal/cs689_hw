@@ -167,14 +167,19 @@ struct binary_tree_node *buildtree(char infix[],int start, int end){
         j--;
         node[j] = new_binary_tree_node(infix[j]);
         node[j]->rlink = new_binary_tree_node(infix[j+1]);
-
-
+	node[j]->llink = new_binary_tree_node(infix[j-2]);
+	//j--;
+	j--;
         while(j>=0){
-
-        j--;
+	j--;
+        
+//	if (j>=0){
         node[j]=node[j+2]->llink=new_binary_tree_node(infix[j]);
+//	if (j>0){
         node[j]->rlink = new_binary_tree_node(infix[j+1]);
+	
         j--;
+
         }
         return node[len-1];
 }
@@ -194,7 +199,7 @@ int main () {
 	
 //	scanf("%s",&str);
 	gets(str);
-	len=strlen(str);
+	len=strlen(str)-1;
 	root = buildtree(str,0,len);
 	
 
