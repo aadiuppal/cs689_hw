@@ -4,6 +4,7 @@
  */
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /* trees will store characters */
 
@@ -152,57 +153,67 @@ int eval (struct binary_tree_node *T) {
 	}
 }
 
+
+
+
+
+struct binary_tree_node *buildtree(char infix[],int start, int end){
+        int i= start;
+        int j= end;
+        int len =end;
+        struct binary_tree_node *node[30];      //Declare node
+        struct stack_node *A = NULL;
+
+        j--;
+        node[j] = new_binary_tree_node(infix[j]);
+        node[j]->rlink = new_binary_tree_node(infix[j+1]);
+
+
+        while(j>=0){
+
+        j--;
+        node[j]=node[j+2]->llink=new_binary_tree_node(infix[j]);
+        node[j]->rlink = new_binary_tree_node(infix[j+1]);
+        j--;
+        }
+        return node[len-1];
+}
+
+
+
+
+
+
 int main () {
 
 	/* make a syntax tree containing an expression */
 	char str[30];
-	struct binary_tree_node *op[30];
+	struct binary_tree_node *root;
 	int i=0;
 	int len;
+	
+//	scanf("%s",&str);
 	gets(str);
 	len=strlen(str);
-	buildtree(str,0,len);
+	root = buildtree(str,0,len);
 	
 
 //	struct binary_tree_node *T = make_interesting_syntax_tree ();
 
 	/* print the tree in inorder using Knuth's algorithm */
-	i = strelen(str)/2;
-	F (str[i]);
+
+	
 	putchar ('\n');
 
 	/* print the tree in inorder with the recursive algorithm */
 
-	traverse (str[i]);
+	traverse (root);
 	putchar ('\n');
 
 	/* evaluate the tree */
 
-	printf ("eval = %d\n", eval (str[i]));
+	printf ("eval = %d\n", eval (root));
 	return 0;
 }
 
 
-
-
-
-void buildtree(char infix[],int start, int end){
-	int i= start;
-	int j= end;
-	int len =end;
-	node_data_type node[30];	//Declare node
-	struct stack_node *A = NULL;
-	for (i=0;i<len;i++){
-
-	if(infix[i]!='*' || infix[i]!='+'||infix[i]!='-' || infix[i]!='/'){ //TODO FIX IT
-	      node_data_type node[i] =  new_binary_tree_node(infix[i]);
-               stack_push(&A,infix[i]);
-	}
-	else {
-		node_data_type node[i]=new_binary_tree_node(infix[i]);
-		node[i]->rlink=stack_pop(&A);
-		node[i]->llink=stack_pop(&A);
-		stack_push(&A,infix[i]);
-	}
-	}
-}
