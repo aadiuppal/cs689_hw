@@ -173,11 +173,19 @@ struct binary_tree_node *buildtree(char infix[],int start, int end){
         while(j>=0){
 	j--;
         
-//	if (j>=0){
+	if (j>=0){
         node[j]=node[j+2]->llink=new_binary_tree_node(infix[j]);
 //	if (j>0){
+	printf("1...\n");
         node[j]->rlink = new_binary_tree_node(infix[j+1]);
-	
+	}
+	else{
+	j++;
+	j++;
+	printf("2...%c\n",infix[j]);
+	node[j]->llink=new_binary_tree_node(infix[j-1]);
+	j--;
+	}
         j--;
 
         }
